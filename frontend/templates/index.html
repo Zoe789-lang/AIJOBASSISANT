@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI求职助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <svg width="20" height="20" viewBox="0 0 100 100" fill="none">
+                    <rect width="100" height="100" rx="12" fill="#191919"/>
+                    <path d="M30 30h40v4H30zM30 42h30v4H30zM30 54h35v4H30zM30 66h25v4H30z" fill="white"/>
+                </svg>
+                <span class="brand-text">AI求职助手</span>
+            </div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="job-analysis">招聘分析</button>
+                <button class="nav-tab" data-tab="achievement">成就分析</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-container">
+        <!-- 页面标题区 -->
+        <section class="page-header">
+            <h1 class="page-title">AI 求职助手</h1>
+            <p class="page-subtitle">分析岗位需求，发现个人优势，优化简历投递</p>
+        </section>
+
+        <!-- Tab 1: 招聘简章分析 -->
+        <section id="tab-job-analysis" class="tab-content active">
+            <div class="notion-card">
+                <div class="notion-card-header">
+                    <div class="notion-icon" style="background: #E8DEFF; color: #6940A5;">🔍</div>
+                    <div>
+                        <h2 class="notion-title">招聘简章分析</h2>
+                        <p class="notion-desc">粘贴招聘信息，AI 帮你拆解企业看重的技能、背景和岗位职责</p>
+                    </div>
+                </div>
+                <div class="notion-divider"></div>
+                <div class="notion-card-body">
+                    <div class="notion-field">
+                        <label class="notion-label">招聘简章内容</label>
+                        <textarea
+                            id="job-description"
+                            class="notion-textarea"
+                            placeholder="在这里粘贴完整的招聘简章内容...&#10;&#10;例如：&#10;【岗位名称】高级产品经理&#10;【岗位职责】1. 负责产品规划...&#10;【任职要求】1. 本科及以上学历..."
+                            rows="10"
+                        ></textarea>
+                        <p class="notion-hint">粘贴越完整的招聘信息，分析结果越精准</p>
+                    </div>
+                    <button id="btn-analyze-job" class="notion-btn" onclick="analyzeJob()">
+                        开始分析
+                    </button>
+                    <div id="result-job" class="notion-result hidden">
+                        <div class="notion-result-header">
+                            <span>分析结果</span>
+                            <button class="notion-btn-ghost" onclick="copyResult('result-job-content')">复制</button>
+                        </div>
+                        <div class="notion-divider"></div>
+                        <div id="result-job-content" class="notion-result-body markdown-body"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: 个人成就分析 -->
+        <section id="tab-achievement" class="tab-content">
+            <div class="notion-card">
+                <div class="notion-card-header">
+                    <div class="notion-icon" style="background: #FDE8D8; color: #C4550D;">⭐</div>
+                    <div>
+                        <h2 class="notion-title">个人成就分析</h2>
+                        <p class="notion-desc">写下让你有成就感的事，AI 帮你发现隐藏的优势和天赋</p>
+                    </div>
+                </div>
+                <div class="notion-divider"></div>
+                <div class="notion-card-body">
+                    <div class="notion-field">
+                        <label class="notion-label">你有成就感的事情</label>
+                        <textarea
+                            id="achievements"
+                            class="notion-textarea"
+                            placeholder="写下让你感到自豪和有成就感的事情，可以包括：&#10;&#10;• 工作中完成的出色项目&#10;• 解决过的棘手问题&#10;• 学到的新技能&#10;• 帮助他人的经历&#10;• 克服困难的经历&#10;• 获得的认可或奖项&#10;&#10;每件事写几句话描述即可，越具体越好！"
+                            rows="12"
+                        ></textarea>
+                        <p class="notion-hint">不用正好 10 件，写你觉得最有成就感的就好，细节越丰富分析越准确</p>
+                    </div>
+                    <button id="btn-analyze-achieve" class="notion-btn" onclick="analyzeAchievements()">
+                        发现我的优势
+                    </button>
+                    <div id="result-achievement" class="notion-result hidden">
+                        <div class="notion-result-header">
+                            <span>你的优势分析</span>
+                            <button class="notion-btn-ghost" onclick="copyResult('result-achievement-content')">复制</button>
+                        </div>
+                        <div class="notion-divider"></div>
+                        <div id="result-achievement-content" class="notion-result-body markdown-body"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">AI 正在分析中...</p>
+            <p class="loading-subtext">这可能需要 10-30 秒</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
